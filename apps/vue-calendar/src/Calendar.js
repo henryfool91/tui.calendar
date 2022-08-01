@@ -1,9 +1,8 @@
 /* eslint-disable no-undefined */
-import Calendar from '@toast-ui/calendar';
-import Vue from 'vue';
+import Calendar from "@toast-ui/calendar";
 
-export default Vue.component('ToastUICalendar', {
-  name: 'ToastUICalendar',
+export default {
+  name: "ToastUICalendar",
   props: {
     view: String,
     useFormPopup: {
@@ -101,14 +100,16 @@ export default Vue.component('ToastUICalendar', {
     this.addEventListeners();
     this.calendarInstance.createEvents(this.events);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.calendarInstance.off();
     this.calendarInstance.destroy();
   },
   methods: {
     addEventListeners() {
-      Object.keys(this.$listeners).forEach((eventName) => {
-        this.calendarInstance.on(eventName, (...args) => this.$emit(eventName, ...args));
+      Object.keys(this.$attrs).forEach((eventName) => {
+        this.calendarInstance.on(eventName, (...args) =>
+          this.$emit(eventName, ...args)
+        );
       });
     },
     getRootElement() {
@@ -118,5 +119,5 @@ export default Vue.component('ToastUICalendar', {
       return this.calendarInstance;
     },
   },
-  template: '<div ref="container" class="toastui-vue-calendar" />',
-});
+};
+</script>
